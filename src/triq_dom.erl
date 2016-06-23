@@ -100,7 +100,7 @@
 -record(bound_domain,{dom1,val1,dom2,fun2,size}).
 -record(choose,{min,max}).
 -record(elements,{elems,size,picked=none}).
--record(seal,{dom,seed}).
+% -record(seal,{dom,seed}).
 -record(unicode_binary, {size, encoding = utf8}).
 
 
@@ -149,7 +149,7 @@
          shrink/2,
          sample/1,
          sampleshrink/1,
-         seal/1,
+        %  seal/1,
          open/1,
          peek/1,
          domain/3,
@@ -1138,22 +1138,22 @@ sample(Dom) ->
           [],
           11).
 
-%%-------------------------------------------------------------------
-%% @doc Get the domain of boxes of T
-%% @spec seal(domain(T)) -> domain(box(T))
-%% @end
-%%-------------------------------------------------------------------
--spec seal(Dom::domain(T)) -> domrec(box(T)).
-seal(Dom) ->
-    Seed = random:seed(),
-    random:seed(Seed),
-    #?DOM{kind=#seal{dom=Dom,seed=Seed}, pick=fun seal_pick/2}.
-
-seal_pick(#?DOM{kind=#seal{dom=Dom,seed=Seed}}, SampleSize) ->
-    OldSeed = random:seed(Seed),
-    {BoxDom,BoxValue} = pick(Dom,SampleSize),
-    random:seed(OldSeed),
-    #?BOX{dom=BoxDom,value=BoxValue}.
+% %%-------------------------------------------------------------------
+% %% @doc Get the domain of boxes of T
+% %% @spec seal(domain(T)) -> domain(box(T))
+% %% @end
+% %%-------------------------------------------------------------------
+% -spec seal(Dom::domain(T)) -> domrec(box(T)).
+% seal(Dom) ->
+%     Seed = random:seed(),
+%     random:seed(Seed),
+%     #?DOM{kind=#seal{dom=Dom,seed=Seed}, pick=fun seal_pick/2}.
+%
+% seal_pick(#?DOM{kind=#seal{dom=Dom,seed=Seed}}, SampleSize) ->
+%     OldSeed = random:seed(Seed),
+%     {BoxDom,BoxValue} = pick(Dom,SampleSize),
+%     random:seed(OldSeed),
+%     #?BOX{dom=BoxDom,value=BoxValue}.
 
 %%-------------------------------------------------------------------
 %% @doc Open a box, yielding a domain which always generates the same value.
